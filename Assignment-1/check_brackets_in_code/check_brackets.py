@@ -18,15 +18,22 @@ class Bracket:
 
 if __name__ == "__main__":
     text = sys.stdin.read()
-
-    opening_brackets_stack = []
-    for i, next in enumerate(text):
-        if next == '(' or next == '[' or next == '{':
-            # Process opening bracket, write your code here
-            pass
-
-        if next == ')' or next == ']' or next == '}':
-            # Process closing bracket, write your code here
-            pass
-
-    # Printing answer, write your code here
+    def find_bracket(text):
+        opening_brackets_stack = []
+        for i, next in enumerate(text):
+            if next == '(' or next == '[' or next == '{':
+                # Process opening bracket, write your code here
+                opening_brackets_stack.append(Bracket(next, i))
+            if next == ')' or next == ']' or next == '}':
+                # Process closing bracket, write your code here
+                if not opening_brackets_stack:
+                    return (i + 1)
+                top = opening_brackets_stack.pop()
+                if not top.Match(next):
+                    return (i + 1)
+                    break
+        if not opening_brackets_stack:
+            return ('Success')
+        else:
+            return (opening_brackets_stack[0].position + 1)
+    print(find_bracket(text))
