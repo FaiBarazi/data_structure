@@ -1,5 +1,4 @@
 # python3
-import heapq
 
 class HeapBuilder:
     def __init__(self):
@@ -48,8 +47,7 @@ class HeapBuilder:
         # but in the worst case gives a quadratic number of swaps.
         #
         # TODO: replace by a more efficient implementation
-        heap = self._data[:]
-        heapq.heapify(heap)
+
         for node in range(self._heap_size // 2, 0, -1):
             self.min_heapify(node)
 
