@@ -50,10 +50,8 @@ class HeapBuilder:
         # TODO: replace by a more efficient implementation
         heap = self._data[:]
         heapq.heapify(heap)
-        print('correct answer', heap)
         for node in range(self._heap_size // 2, 0, -1):
             self.min_heapify(node)
-        print('my result', self._data)
 
     def Solve(self):
         self.ReadData()
