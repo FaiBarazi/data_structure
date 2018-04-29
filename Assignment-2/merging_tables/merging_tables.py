@@ -1,15 +1,13 @@
 # python3
 
 import sys
-import random
+
 
 n, m = map(int, sys.stdin.readline().split())
 
-# n = random.randint(1, 100000)
-# m = random.randint(1, 100000)
-# lines = [random.randint(0, 10000) for i in range(n)]
 lines = list(map(int, sys.stdin.readline().split()))
-rank = [1] * n
+ans = [max(lines)]
+rank = [0] * n
 parent = list(range(0, n))
 
 def getParent(table):
@@ -18,26 +16,33 @@ def getParent(table):
         table = getParent(parent[table])
     return parent[table]
 
+
 def merge(destination, source):
     root_destination, root_source = getParent(destination), getParent(source)
-    # print('I am destination', root_destination + 1)
-    # print('I am source', root_source + 1)
-    if root_destination != root_source:
-        parent[source] = destination
-        rank[root_destination] += 1
-        lines[root_destination] += lines[root_source]
-        lines[source] = 0
-        lines[root_source] = 0
-        #print('I am lines', lines)
-    #print('I am the parent list', parent)
-    #print('I am lines')
+    root_value = 0
 
-    # merge two components
-    # use union by rank heuristic
-    # update ans with the new maximum table size
+    if root_destination == root_source:
+        return
+
+    if rank[root_destination] >= rank[root_source]:
+        parent[root_source] = root_destination
+        if rank[root_destination] == rank[root_source]:
+            rank[root_destination] += 1
+        lines[root_destination] += lines[root_source]
+        root_value = lines[root_destination]
+        lines[root_source] = 0
+
+    else:
+        parent[root_destination] = root_source
+        lines[root_source] += lines[root_destination]
+        root_value = lines[root_source]
+        lines[root_destination] = 0
+
+    if root_value > ans[0]:
+        ans[0] = root_value
+
 
 for i in range(m):
     destination, source = map(int, sys.stdin.readline().split())
-    # destination, source = random.randint(1, n), random.randint(1, n)
     merge(destination - 1, source - 1)
-    print(max(lines))
+    print(ans[0])
