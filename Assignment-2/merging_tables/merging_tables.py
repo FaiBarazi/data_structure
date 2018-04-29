@@ -1,8 +1,13 @@
 # python3
 
 import sys
+import random
 
 n, m = map(int, sys.stdin.readline().split())
+
+# n = random.randint(1, 100000)
+# m = random.randint(1, 100000)
+# lines = [random.randint(0, 10000) for i in range(n)]
 lines = list(map(int, sys.stdin.readline().split()))
 rank = [1] * n
 parent = list(range(0, n))
@@ -22,6 +27,7 @@ def merge(destination, source):
         rank[root_destination] += 1
         lines[root_destination] += lines[root_source]
         lines[source] = 0
+        lines[root_source] = 0
         #print('I am lines', lines)
     #print('I am the parent list', parent)
     #print('I am lines')
@@ -30,9 +36,8 @@ def merge(destination, source):
     # use union by rank heuristic
     # update ans with the new maximum table size
 
-    return True
-
 for i in range(m):
     destination, source = map(int, sys.stdin.readline().split())
+    # destination, source = random.randint(1, n), random.randint(1, n)
     merge(destination - 1, source - 1)
     print(max(lines))
