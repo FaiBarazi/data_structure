@@ -15,14 +15,16 @@ def getParent(table):
 
 def merge(destination, source):
     root_destination, root_source = getParent(destination), getParent(source)
-    print('I am destination', root_destination + 1)
-    print('I am source', root_source + 1)
+    # print('I am destination', root_destination + 1)
+    # print('I am source', root_source + 1)
     if root_destination != root_source:
         parent[source] = destination
         rank[root_destination] += 1
         lines[root_destination] += lines[root_source]
-        print('I am lines', lines)
-    print('I am the parent list', parent)
+        lines[source] = 0
+        #print('I am lines', lines)
+    #print('I am the parent list', parent)
+    #print('I am lines')
 
     # merge two components
     # use union by rank heuristic
